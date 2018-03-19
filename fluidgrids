@@ -1,0 +1,121 @@
+Investigacion hecha de como utilizar Ems para mejorar la resolucion final del diseño en una pagina web hecha con HTML y CSS
+en un grid layout.
+Referencias: http://alistapart.com/article/fluidgrids
+
+target ÷ context = result
+If we assume the body’s default type size to be 16px, we can plug each desired font-size value into this formula.
+So to properly match our header to the comp, we divide the target value (24px) by the font-size of its container (16px)
+24 ÷ 16 = 1.5
+So the header is 1.5 times the default body size, or 1.5em, which we can plug directly into our stylesheet
+
+h1 {
+    font-family: Georgia, serif;
+    font-size: 1.5em;        /* 24px / 16px = 1.5em */
+}
+
+To size the list to the em-equivalent of 14px, we can use the same formula.
+Assuming again that the body’s font-size is roughly 16px, we simply divide that target by the context:
+14 ÷ 16 = 0.875
+
+example:
+ul {
+    font-size: 0.875em;      /* 14px / 16px = 0.875em */
+}
+
+slight cleanup.
+ each, separated by 20px-wide gutters, all of which totals up to a width of 988px. 
+ To start, let’s treat our comp like any other, fixed or fluid: before we start
+ coding, let’s look at the design, and assess the different content areas. Thankfully, it’s a pretty short inventory.
+ 
+ <div id="page">
+    <h1>The Ratio Revolution Will Not Be Televised</h1>
+    <div class="entry">
+        <h2>Anyone else tired of Helvetica?</h2>
+        <h3 class="info">A <a href="#">Blog</a> Entry:</h3>
+        <div class="content">
+            <div class="main">
+                <p>Main content goes here. Lorem ipsum etc., etc.</p>
+            </div><!-- /end .content -->
+            <div class="meta">
+                <p>Posted on etc., etc.</p>
+            </div><!-- /end .meta -->
+        </div><!-- /end .main -->
+    </div><!-- /end .entry -->
+</div><!-- /end #page -->
+
+----------------------------------------------------------------------------------------------
+#page {
+    margin: 40px auto;
+    padding: 0 1em;
+    max-width: 61.75em;      /* 988px / 16px = 61.75em */
+}
+
+----------------------------------------------------------------------------------------------
+we’re using a variant of our font-size formula to define the maximum width of our design. 
+By dividing the comp’s width of 988px by our base font-size of 16px
+we can set a max-width in ems to approximate the pixel-based width from our mockup
+which will prevent the page from exceeding our ideal of 988px. 
+But since we’ve used ems to set this upper limit, the max-width will scale up as the user 
+increases her browser’s text size—a nifty little trick that even works in older versions of Internet Explorer,
+if a small CSS patch is applied.
+
+
+----------------------------------------------------------------------------------------------
+h1 {
+    margin-left: 144px;
+    width: 700px;
+}
+----------------------------------------------------------------------------------------------
+
+As a result, we simply divide 700px (the target) by 988px (the context) like so
+700 ÷ 988 = 0.7085em
+And there it is: 0.7085 translates into 70.85%, a width we can drop directly into our stylesheet:
+----------------------------------------------------------------------------------------------
+h1 {
+    margin-left: 144px;
+    width: 70.85%;           /* 700px / 988px = 0.7085 */
+}
+----------------------------------------------------------------------------------------------
+
+the next thing to do is apply this method to the margin.
+----------------------------------------------------------------------------------------------
+h1 {
+    margin-left: 14.575%;    /* 144px / 988px = 0.14575 */
+    width: 70.85%;           /* 700px / 988px = 0.7085 */
+}
+----------------------------------------------------------------------------------------------
+The title’s proportions will always remain intact, even as it reflows to fit the size of the browser window.
+DONE successfully translated the ratios from our grid into CSS-friendly percentages. 
+
+
+perform the same simple division to wrap up the layout for the entry itself, sized at 844px in our comp
+with some 124px-wide marginalia to the left of it. For the entry:
+
+----------------------------------------------------------------------------------------------
+.entry h2,
+.entry .content {
+    float: right;
+    width: 85.425%;          /* 844px / 988px = 0.85425 */
+}.entry .info {
+    float: left;
+    width: 12.551%;          /* 124px / 988px = 0.12551 */
+}
+---------------------------------------------------------------------------------------------
+
+.entry .main {
+    float: left;
+    width: 82.938%;          /* 700px / 844px = 0.82938 */
+}.entry .meta {
+    float: right;
+    width: 14.692%;          /* 124px / 844px = 0.14692 */
+}
+------
+this technique its friendly with cross-browsers.
+
+articulos que pueden ser interesantes:
+@GeekyDiego: http://www.designinfluences.com/fluid960gs/ 
+
+
+
+
+
